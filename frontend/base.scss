@@ -4,3 +4,28 @@ body {
     font-family: "Helvetica Neue", "Lucida Grande", sans-serif;
     margin: 20px;
 }
+
+#shape-list {
+    width: 260px;
+
+    ol {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+
+        p {
+            margin-top: 0;
+        }
+        pre {
+            margin-top: 5px;
+            font-size: 12px;
+        }
+    }
+}
+
+#scene {
+    border: 1px solid #F3F3F3;
+    position: absolute;
+    left: 300px;
+    top: 20px;
+}
