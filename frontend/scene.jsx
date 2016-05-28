@@ -5,10 +5,10 @@ class Scene extends React.Component {
 
     render() {
         return <svg id="scene" width={this.props.width} height={this.props.height}>
-            {this.props.shapes.map((shapeProps, i) => {
+            {this.props.shapes.map((shapeProps) => {
                 let Shape = shapeProps.type
                 let props = _.omit(shapeProps, ["type", "id", "name"])
-                return <Shape key={i} {...props} />
+                return <Shape key={shapeProps.id} {...props} />
             })}
         </svg>
     }

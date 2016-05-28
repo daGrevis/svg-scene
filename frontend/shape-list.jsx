@@ -23,9 +23,9 @@ class ShapeList extends React.Component {
     render() {
         return <div id="shape-list">
             <ol>
-                {this.props.shapes.map((shapeProps, i) =>
+                {this.props.shapes.map((shapeProps) =>
                     <ShapeItem
-                        key={i}
+                        key={shapeProps.id}
                         {...shapeProps}
                         removeShape={this.props.removeShape}
                     />
