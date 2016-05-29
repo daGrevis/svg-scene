@@ -6,11 +6,26 @@ import {ShapeForm} from "./shape-form"
 class ShapeItem extends React.Component {
 
     render() {
+        let moveTop, moveBottom
+        if (this.props.canShapeBeMoved(this.props.id, -1)) {
+            moveBottom = <span>
+                [<a href="#" onClick={(ev) => this.props.onMoveShape(ev, this.props.id, -1)}>↑</a>]
+            </span>
+        }
+        if (this.props.canShapeBeMoved(this.props.id, 1)) {
+            moveTop = <span>
+                [<a href="#" onClick={(ev) => this.props.onMoveShape(ev, this.props.id, 1)}>↓</a>]
+            </span>
+        }
+
         return <li>
             <a href="#" onClick={(ev) => this.props.onEditShape(ev, this.props.id)}>
                 {this.props.name || "Untitled"}
             </a>
-            &nbsp;[<a href="#" onClick={(ev) => this.props.onRemoveShape(ev, this.props.id)}>x</a>]
+            &nbsp;
+            [<a href="#" onClick={(ev) => this.props.onRemoveShape(ev, this.props.id)}>x</a>]
+            {moveTop}
+            {moveBottom}
             <p>{this.props.type}</p>
         </li>
     }
@@ -51,6 +66,12 @@ class ShapeList extends React.Component {
         this.setState({currentShape}, this.openModal)
     }
 
+    onMoveShape = (ev, id, dir) => {
+        ev.preventDefault()
+
+        this.props.moveShape(id, dir)
+    }
+
     onExportShapes = () => {
         console.log(JSON.stringify(this.props.shapes))
         alert("Shapes exported to console!")
@@ -78,6 +99,8 @@ class ShapeList extends React.Component {
                         {...shapeProps}
                         onRemoveShape={this.onRemoveShape}
                         onEditShape={this.onEditShape}
+                        canShapeBeMoved={this.props.canShapeBeMoved}
+                        onMoveShape={this.onMoveShape}
                     />
                 )}
             </ol>

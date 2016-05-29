@@ -54,9 +54,25 @@ class App extends React.Component {
     }
 
     updateShape = (shape) => {
-        let i = _.findKey(this.state.shapes, (x) => x.id === shape.id)
         let shapes = this.state.shapes
+        let i = _.findKey(shapes, (x) => x.id === shape.id)
         shapes[i] = shape
+
+        this.setState({shapes})
+    }
+
+    canShapeBeMoved = (id, dir) => {
+        let i = Number(_.findKey(this.state.shapes, (x) => x.id === id))
+        return !!this.state.shapes[i + dir]
+    }
+
+    moveShape = (id, dir) => {
+        let shapes = this.state.shapes
+        let i = Number(_.findKey(shapes, (x) => x.id === id))
+        let shape = shapes[i]
+        let shapeBefore = shapes[i + dir]
+        shapes[i + dir] = shape
+        shapes[i] = shapeBefore
 
         this.setState({shapes})
     }
@@ -68,6 +84,8 @@ class App extends React.Component {
                 removeShape={this.removeShape}
                 addShape={this.addShape}
                 updateShape={this.updateShape}
+                canShapeBeMoved={this.canShapeBeMoved}
+                moveShape={this.moveShape}
             />
             <Scene width={SCENE_WIDTH} height={SCENE_HEIGHT} shapes={this.state.shapes} />
         </div>
