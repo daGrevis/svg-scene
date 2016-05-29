@@ -51,6 +51,11 @@ class ShapeList extends React.Component {
         this.setState({currentShape}, this.openModal)
     }
 
+    onExportShapes = () => {
+        console.log(JSON.stringify(this.props.shapes))
+        alert("Shapes exported to console!")
+    }
+
     addShape = (shape) => {
         this.closeModal()
 
@@ -77,7 +82,8 @@ class ShapeList extends React.Component {
                 )}
             </ol>
 
-            <a href="#" onClick={this.onAddShape}>Add Shape</a>
+            <p><a href="#" onClick={this.onAddShape}>Add Shape</a></p>
+            <p><a href="#" onClick={this.onExportShapes}>Export Shapes</a></p>
 
             <Modal isOpen={this.state.isModalOpen} onRequestClose={this.closeModal}>
                 <ShapeForm
