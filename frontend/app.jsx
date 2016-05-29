@@ -53,12 +53,21 @@ class App extends React.Component {
         this.setState({shapes})
     }
 
+    updateShape = (shape) => {
+        let i = _.findKey(this.state.shapes, (x) => x.id === shape.id)
+        let shapes = this.state.shapes
+        shapes[i] = shape
+
+        this.setState({shapes})
+    }
+
     render() {
         return <div>
             <ShapeList
                 shapes={this.state.shapes}
                 removeShape={this.removeShape}
                 addShape={this.addShape}
+                updateShape={this.updateShape}
             />
             <Scene width={SCENE_WIDTH} height={SCENE_HEIGHT} shapes={this.state.shapes} />
         </div>

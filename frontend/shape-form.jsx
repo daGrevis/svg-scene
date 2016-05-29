@@ -57,6 +57,14 @@ class ShapeForm extends React.Component {
         strokeWidth: "1",
     }
 
+    constructor(props) {
+        super(props)
+
+        if (props.currentShape !== null) {
+            this.state = props.currentShape
+        }
+    }
+
     getShapeTypes() {
         return _.keys(TYPE_TO_FORM_DATA)
     }
@@ -81,8 +89,12 @@ class ShapeForm extends React.Component {
 
         let shapeData = _.merge(baseData, extraData)
 
-        this.props.addShape(shapeData)
-        this.props.closeModal()
+        if (this.props.currentShape === null) {
+            this.props.addShape(shapeData)
+        } else {
+            shapeData.id = this.props.currentShape.id
+            this.props.updateShape(shapeData)
+        }
     }
 
     getBaseData() {

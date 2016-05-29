@@ -5,16 +5,12 @@ import {ShapeForm} from "./shape-form"
 
 class ShapeItem extends React.Component {
 
-    onDelete(ev, id) {
-        ev.preventDefault()
-
-        this.props.removeShape(id)
-    }
-
     render() {
         return <li>
-            <strong>{this.props.name || "Untitled"}</strong>
-            &nbsp;[<a href="#" onClick={(ev) => this.onDelete(ev, this.props.id)}>x</a>]
+            <a href="#" onClick={(ev) => this.props.onEditShape(ev, this.props.id)}>
+                {this.props.name || "Untitled"}
+            </a>
+            &nbsp;[<a href="#" onClick={(ev) => this.props.onRemoveShape(ev, this.props.id)}>x</a>]
             <p>{this.props.type}</p>
         </li>
     }
@@ -25,6 +21,7 @@ class ShapeList extends React.Component {
 
     state = {
         isModalOpen: false,
+        currentShape: null,
     }
 
     openModal = () => {
@@ -35,10 +32,36 @@ class ShapeList extends React.Component {
         this.setState({isModalOpen: false})
     }
 
+    onRemoveShape = (ev, id) => {
+        ev.preventDefault()
+
+        this.props.removeShape(id)
+    }
+
     onAddShape = (ev) => {
         ev.preventDefault()
 
         this.openModal()
+    }
+
+    onEditShape = (ev, id) => {
+        ev.preventDefault()
+
+        let currentShape = _.find(this.props.shapes, (x) => x.id === id)
+        this.setState({currentShape}, this.openModal)
+    }
+
+    addShape = (shape) => {
+        this.closeModal()
+
+        this.props.addShape(shape)
+    }
+
+    updateShape = (shape) => {
+        this.closeModal()
+        this.setState({currentShape: null})
+
+        this.props.updateShape(shape)
     }
 
     render() {
@@ -48,7 +71,8 @@ class ShapeList extends React.Component {
                     <ShapeItem
                         key={shapeProps.id}
                         {...shapeProps}
-                        removeShape={this.props.removeShape}
+                        onRemoveShape={this.onRemoveShape}
+                        onEditShape={this.onEditShape}
                     />
                 )}
             </ol>
@@ -57,8 +81,10 @@ class ShapeList extends React.Component {
 
             <Modal isOpen={this.state.isModalOpen} onRequestClose={this.closeModal}>
                 <ShapeForm
-                    addShape={this.props.addShape}
+                    addShape={this.addShape}
+                    updateShape={this.updateShape}
                     closeModal={this.closeModal}
+                    currentShape={this.state.currentShape}
                 />
             </Modal>
         </div>
