@@ -23,6 +23,28 @@ body {
     }
 }
 
+#shape-form {
+    .row {
+        margin-bottom: 10px;
+    }
+
+    input, select, button {
+        display: block;
+        padding: 5px;
+    }
+
+    label {
+        font-size: 14px;
+        color: #444;
+        display: block;
+        padding-bottom: 5px;
+    }
+
+    button {
+        margin-top: 20px;
+    }
+}
+
 #scene {
     border: 1px solid #F3F3F3;
     position: absolute;

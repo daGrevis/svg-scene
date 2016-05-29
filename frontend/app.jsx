@@ -42,6 +42,14 @@ class App extends React.Component {
 
     removeShape = (id) => {
         let shapes = _.filter(this.state.shapes, (x) => x.id !== id)
+
+        this.setState({shapes})
+    }
+
+    addShape = (shape) => {
+        shape.id = uuid()
+        let shapes = _.concat(this.state.shapes, shape)
+
         this.setState({shapes})
     }
 
@@ -50,6 +58,7 @@ class App extends React.Component {
             <ShapeList
                 shapes={this.state.shapes}
                 removeShape={this.removeShape}
+                addShape={this.addShape}
             />
             <Scene width={SCENE_WIDTH} height={SCENE_HEIGHT} shapes={this.state.shapes} />
         </div>

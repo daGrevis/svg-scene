@@ -1,4 +1,7 @@
 import React from "react"
+import Modal from "react-modal"
+
+import {ShapeForm} from "./shape-form"
 
 class ShapeItem extends React.Component {
 
@@ -20,6 +23,24 @@ class ShapeItem extends React.Component {
 
 class ShapeList extends React.Component {
 
+    state = {
+        isModalOpen: false,
+    }
+
+    openModal = () => {
+        this.setState({isModalOpen: true})
+    }
+
+    closeModal = () => {
+        this.setState({isModalOpen: false})
+    }
+
+    onAddShape = (ev) => {
+        ev.preventDefault()
+
+        this.openModal()
+    }
+
     render() {
         return <div id="shape-list">
             <ol>
@@ -31,6 +52,15 @@ class ShapeList extends React.Component {
                     />
                 )}
             </ol>
+
+            <a href="#" onClick={this.onAddShape}>Add Shape</a>
+
+            <Modal isOpen={this.state.isModalOpen} onRequestClose={this.closeModal}>
+                <ShapeForm
+                    addShape={this.props.addShape}
+                    closeModal={this.closeModal}
+                />
+            </Modal>
         </div>
     }
 
