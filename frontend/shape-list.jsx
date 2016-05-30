@@ -76,7 +76,7 @@ class ShapeList extends React.Component {
     onExportShapes = (ev) => {
         ev.preventDefault()
 
-        let shapes = _.clone(this.props.shapes)
+        let shapes = _.cloneDeep(this.props.shapes)
         _.forEach(shapes, (shape) => {
             delete shape.id
         })
