@@ -1,3 +1,4 @@
+import _ from "lodash"
 import React from "react"
 import Modal from "react-modal"
 
@@ -72,8 +73,16 @@ class ShapeList extends React.Component {
         this.props.moveShape(id, dir)
     }
 
-    onExportShapes = () => {
-        console.log(JSON.stringify(this.props.shapes))
+    onExportShapes = (ev) => {
+        ev.preventDefault()
+
+        let shapes = _.clone(this.props.shapes)
+        _.forEach(shapes, (shape) => {
+            delete shape.id
+        })
+
+        console.log(JSON.stringify(shapes, null, 4))
+
         alert("Shapes exported to console!")
     }
 
