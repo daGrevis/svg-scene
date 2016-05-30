@@ -76,10 +76,7 @@ class ShapeList extends React.Component {
     onExportShapes = (ev) => {
         ev.preventDefault()
 
-        let shapes = _.cloneDeep(this.props.shapes)
-        _.forEach(shapes, (shape) => {
-            delete shape.id
-        })
+        let shapes = this.props.shapes.map((x) => _.omit(x, ["id"]))
 
         console.log(JSON.stringify(shapes, null, 4))
 
