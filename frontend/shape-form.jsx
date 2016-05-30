@@ -54,14 +54,14 @@ class ShapeForm extends React.Component {
         type: "circle",
         fill: "#000000",
         stroke: "#000000",
-        strokeWidth: "1",
+        strokeWidth: "0",
     }
 
     constructor(props) {
         super(props)
 
         if (props.currentShape !== null) {
-            this.state = props.currentShape
+            this.state = _.merge(this.state, props.currentShape)
         }
     }
 
