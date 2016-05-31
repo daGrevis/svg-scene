@@ -1,4 +1,5 @@
 let shapesFixture = [
+    // Paste the exported data here.
     {
         "type": "circle",
         "cx": "100",

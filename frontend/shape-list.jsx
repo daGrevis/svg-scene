@@ -96,8 +96,13 @@ class ShapeList extends React.Component {
         this.props.updateShape(shape)
     }
 
+    getShapeCount = () => {
+        return this.props.shapes.length
+    }
+
     render() {
         return <div id="shape-list">
+            <h2>Shapes ({this.getShapeCount()})</h2>
             <ol>
                 {this.props.shapes.map((shapeProps) =>
                     <ShapeItem
@@ -111,6 +116,7 @@ class ShapeList extends React.Component {
                 )}
             </ol>
 
+            <h2>Actions</h2>
             <p><a href="#" onClick={this.onAddShape}>Add Shape</a></p>
             <p><a href="#" onClick={this.onExportShapes}>Export Shapes</a></p>
 
