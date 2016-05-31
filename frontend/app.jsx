@@ -7,6 +7,8 @@ import {TimeMachine} from "./time-machine"
 import {Scene} from "./scene"
 import {ShapeList} from "./shape-list"
 
+import {shapesFixture} from "./fixtures"
+
 import "./base.scss"
 
 import "file?name=[name].[ext]!./index.html"
@@ -14,35 +16,26 @@ import "file?name=[name].[ext]!./index.html"
 const SCENE_WIDTH = 600
 const SCENE_HEIGHT = 800
 
-const INITIAL_SHAPES = [
-    {
-        type: "circle",
-        cx: "100",
-        cy: "100",
-        r: "100",
-        fill: "#446CB3",
-        name: "Blue Circle",
-        id: uuid(),
-    },
-    {
-        type: "rect",
-        x: "120",
-        y: "20",
-        width: "150",
-        height: "150",
-        fill: "#26A65B",
-        name: "Green Rectangle",
-        id: uuid(),
-    },
-]
-
 class App extends React.Component {
 
     history = []
     historyPosition = 0
 
     state = {
-        shapes: INITIAL_SHAPES,
+        shapes: [],
+    }
+
+    constructor(props) {
+        super(props)
+
+        let shapes = props.shapes || []
+
+        // We assign unique ID for each shape. Only used for internal purposes, should not be exported.
+        _.forEach(shapes, function(x) {
+            x.id = uuid()
+        })
+
+        this.state.shapes = shapes
     }
 
     saveHistory() {
@@ -148,8 +141,10 @@ class App extends React.Component {
 }
 
 function onReady() {
+    let app = <App shapes={shapesFixture} />
+
     let mountNode = document.getElementById("react")
-    ReactDOM.render(<App />, mountNode)
+    ReactDOM.render(app, mountNode)
 }
 
 document.addEventListener("DOMContentLoaded", onReady)
