@@ -7,7 +7,7 @@ import {TimeMachine} from "./time-machine"
 import {Scene} from "./scene"
 import {ShapeList} from "./shape-list"
 
-import {shapesFixture} from "./fixtures"
+import {shapesFixture} from "./fixtures";
 
 import "./base.scss"
 
@@ -18,12 +18,12 @@ const SCENE_HEIGHT = 800
 
 class App extends React.Component {
 
-    history = []
-    historyPosition = 0
+    history = [];
+    historyPosition = 0;
 
     state = {
         shapes: [],
-    }
+    };
 
     constructor(props) {
         super(props)
@@ -50,7 +50,7 @@ class App extends React.Component {
 
     canUndo = () => {
         return this.historyPosition > 0
-    }
+    };
 
     undo = () => {
         this.history[this.historyPosition] = this.state
@@ -59,18 +59,18 @@ class App extends React.Component {
 
         let state = this.history[this.historyPosition]
         this.setState(state)
-    }
+    };
 
     canRedo = () => {
         return this.history.length > this.historyPosition + 1
-    }
+    };
 
     redo = () => {
         this.historyPosition += 1
 
         let state = this.history[this.historyPosition]
         this.setState(state)
-    }
+    };
 
     removeShape = (id) => {
         this.saveHistory()
@@ -78,7 +78,7 @@ class App extends React.Component {
         let shapes = _.filter(this.state.shapes, (x) => x.id !== id)
 
         this.setState({shapes})
-    }
+    };
 
     addShape = (shape) => {
         this.saveHistory()
@@ -87,7 +87,7 @@ class App extends React.Component {
         let shapes = _.concat(this.state.shapes, shape)
 
         this.setState({shapes})
-    }
+    };
 
     updateShape = (shape) => {
         this.saveHistory()
@@ -97,12 +97,12 @@ class App extends React.Component {
         shapes[i] = shape
 
         this.setState({shapes})
-    }
+    };
 
     canShapeBeMoved = (id, dir) => {
         let i = Number(_.findKey(this.state.shapes, (x) => x.id === id))
         return !!this.state.shapes[i + dir]
-    }
+    };
 
     moveShape = (id, dir) => {
         this.saveHistory()
@@ -115,7 +115,7 @@ class App extends React.Component {
         shapes[i] = shapeBefore
 
         this.setState({shapes})
-    }
+    };
 
     render() {
         return <div>
